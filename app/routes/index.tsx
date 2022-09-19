@@ -1,7 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import { useActionData, useLoaderData } from "@remix-run/react"
-import { format } from "date-fns"
-import { getToday } from "~/utils/get-today"
 import ScreenHeader from "~/components/Screen/ScreenHeader"
 import ScreenContent from "~/components/Screen/ScreenContent"
 import DailyLogForm, {
@@ -31,19 +29,12 @@ export const loader: LoaderFunction = async () => {
 }
 
 export default function IndexRoute() {
-  const today = getToday()
   const { questions } = useLoaderData<LoaderData>()
   const actionData = useActionData<ActionData>()
 
   return (
     <>
-      <ScreenHeader
-        largeTitle={
-          <>
-            Today, <small>{format(today, "d/M/y")}</small>
-          </>
-        }
-      />
+      <ScreenHeader largeTitle={<>Add New Entry</>} />
 
       <ScreenContent>
         {/*{actionData?.formError && (*/}

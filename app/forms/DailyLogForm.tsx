@@ -9,17 +9,19 @@ import type { DailyLog } from "@prisma/client"
 import Button from "~/components/Button"
 import FormError from "~/components/Form/FormError"
 import { getToday } from "~/utils/get-today"
-import { parseISO } from "date-fns"
+import { format, parseISO } from "date-fns"
 import invariant from "tiny-invariant"
 import { getFormDataValueAsString } from "~/utils/get-form-data-value"
 import type { Question } from "@prisma/client"
 import FormSelect from "~/components/Form/FormSelect"
 import FormTextarea from "~/components/Form/FormTextarea"
+import FormInput from "~/components/Form/FormInput"
 
 export type ActionData = {
   fieldErrors?: {
     content?: string
     questionId?: string
+    logDate?: string
   }
   fields?: {
     content?: FormDataEntryValue
@@ -90,6 +92,13 @@ export const action = (onSuccess: () => unknown) => {
 
     invariant(question, "Question is required")
 
+    const logDate = new Date(fields.logDate)
+
+    logDate.setUTCHours(0)
+    logDate.setUTCMinutes(0)
+    logDate.setUTCSeconds(0)
+    logDate.setUTCMilliseconds(0)
+
     const data = {
       content: fields.content.toString(),
       logDate: new Date(fields.logDate),
@@ -114,6 +123,10 @@ export const action = (onSuccess: () => unknown) => {
   return dailyLogFormAction
 }
 
+const formatDateForInput = (date: Date): string => {
+  return format(date, "yyyy-MM-dd")
+}
+
 const DailyLogForm: FC<DailyLogFormProps> = ({
   actionData,
   dailyLog,
@@ -128,20 +141,17 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
     }
   })
 
+  const logDateValue =
+    typeof actionData?.fields?.logDate === "string"
+      ? actionData?.fields?.logDate
+      : dailyLog?.logDate
+      ? formatDateForInput(dailyLog.logDate)
+      : formatDateForInput(getToday())
+
   return (
     <form method="post" action={formAction}>
-      <input
-        type="hidden"
-        name="logDate"
-        value={
-          dailyLog?.logDate
-            ? dailyLog.logDate.toString()
-            : getToday().toString()
-        }
-      />
-
       <FormFieldGroup>
-        <FormLabel htmlFor="questionId">Entry type</FormLabel>
+        <FormLabel htmlFor="questionId">Question</FormLabel>
         <FormField>
           <FormSelect
             id="questionId"
@@ -174,7 +184,7 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
       </FormFieldGroup>
 
       <FormFieldGroup>
-        <FormLabel htmlFor="content">Entry content</FormLabel>
+        <FormLabel htmlFor="content">Answer</FormLabel>
         <FormField>
           <FormTextarea
             id="content"
@@ -197,6 +207,29 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
         <FormError
           errorText={actionData?.fieldErrors?.content}
           id="content-error"
+        />
+      </FormFieldGroup>
+
+      <FormFieldGroup>
+        <FormLabel htmlFor="logDate">Date</FormLabel>
+        <FormField>
+          <FormInput
+            type="date"
+            id="logDate"
+            name="logDate"
+            defaultValue={logDateValue}
+            aria-invalid={
+              Boolean(actionData?.fieldErrors?.logDate) || undefined
+            }
+            aria-errormessage={
+              actionData?.fieldErrors?.logDate ? "logDate-error" : undefined
+            }
+            required
+          />
+        </FormField>
+        <FormError
+          errorText={actionData?.fieldErrors?.logDate}
+          id="logDate-error"
         />
       </FormFieldGroup>
 
