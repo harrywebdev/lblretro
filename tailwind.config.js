@@ -7,18 +7,18 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      primary: colors.teal,
+      primary: colors.slate,
       secondary: colors.rose,
       neutral: colors.slate,
       gray: colors.gray,
       white: colors.white,
       danger: colors.red,
-      txt01: colors.gray["700"]
-    }
+      txt01: colors.gray["700"],
+    },
   },
   plugins: [
-    plugin(function({ addVariant }) {
+    plugin(function ({ addVariant }) {
       addVariant("not-last", "&:not(:last-child)")
-    })
-  ]
+    }),
+  ],
 }

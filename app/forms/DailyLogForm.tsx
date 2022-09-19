@@ -128,8 +128,6 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
     }
   })
 
-  console.log("questionsAsOptions", questionsAsOptions)
-
   return (
     <form method="post" action={formAction}>
       <input
@@ -203,7 +201,7 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
       </FormFieldGroup>
 
       <FormFieldGroup>
-        <div className="pb-2">
+        <div className="pb-2 flex justify-center">
           <Button primary type="submit" label={!isNew ? "Update" : "Create"} />
         </div>
       </FormFieldGroup>
