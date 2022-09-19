@@ -1,116 +1,36 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
-import { db } from "~/utils/db.server"
-import type { Prisma } from "@prisma/client"
-import { json, redirect } from "@remix-run/node"
-import { Link, useActionData, useLoaderData } from "@remix-run/react"
-import { format, parseISO } from "date-fns"
+import { useActionData, useLoaderData } from "@remix-run/react"
+import { format } from "date-fns"
 import { getToday } from "~/utils/get-today"
 import ScreenHeader from "~/components/Screen/ScreenHeader"
-import ScreenHeaderNavLink from "~/components/Screen/ScreenHeaderNavLink"
+import ScreenContent from "~/components/Screen/ScreenContent"
+import DailyLogForm, {
+  action as dailyLogFormAction,
+} from "~/forms/DailyLogForm"
+import type { ActionData } from "~/forms/DailyLogForm"
+import { json, redirect } from "@remix-run/node"
+import type { Question } from "@prisma/client"
+import { db } from "~/utils/db.server"
 
-// type DailyLogWithTodos = Prisma.DailyLogGetPayload<{
-//   include: { logTodos: true }
-// }>
+export const action: ActionFunction = dailyLogFormAction(() => {
+  return redirect("/")
+})
 
-// type LoaderData = {
-//   dailyLog: DailyLogWithTodos
-// }
+type LoaderData = {
+  questions: Question[]
+  isNew: boolean
+}
 
-// export const loader: LoaderFunction = async () => {
-//   // get today's log or create new one
-//   const today = new Date()
-//
-//   // querying by datetime, let's normalize and use the date part only
-//   today.setUTCHours(0)
-//   today.setUTCMinutes(0)
-//   today.setUTCSeconds(0)
-//   today.setUTCMilliseconds(0)
-//
-//   const dailyLog = await db.dailyLog.findFirst({
-//     where: {
-//       logDate: today,
-//     },
-//     include: {
-//       logTodos: true,
-//     },
-//   })
-//
-//   if (!dailyLog) {
-//     // fetch all the TODOs that should be here
-//     const todos = await db.todo.findMany({
-//       where: {
-//         repeat: {
-//           contains: format(today, "EEEEEE").toLowerCase(),
-//         },
-//       },
-//     })
-//
-//     const logTodos = todos.map((todo) => {
-//       return {
-//         title: todo.title,
-//         description: todo.description,
-//         sequence: todo.sequence,
-//         isDone: false,
-//       }
-//     })
-//
-//     const newDailyLog = await db.dailyLog.create({
-//       data: {
-//         logDate: today,
-//         logTodos: {
-//           create: logTodos,
-//         },
-//       },
-//       include: {
-//         logTodos: true,
-//       },
-//     })
-//
-//     return json({ dailyLog: newDailyLog })
-//   }
-//
-//   return json({ dailyLog })
-// }
+export const loader: LoaderFunction = async () => {
+  const questions = await db.question.findMany()
 
-// type ActionData = {
-//   formError?: string
-// }
-
-// const badRequest = (data: ActionData) => json(data, { status: 400 })
-//
-// export const action: ActionFunction = async ({ request }) => {
-//   const form: FormData = await request.formData()
-//
-//   const id = form.get("id")
-//
-//   if (typeof id !== "string") {
-//     return badRequest({
-//       formError: `Invalid item ID`,
-//     })
-//   }
-//
-//   console.log("id", id)
-//
-//   // make sure we find it
-//   await db.logTodo.findUniqueOrThrow({ where: { id } })
-//
-//   // mark as done
-//   await db.logTodo.update({
-//     data: {
-//       isDone: true,
-//     },
-//     where: {
-//       id,
-//     },
-//   })
-//
-//   return redirect("/")
-// }
+  return json({ questions })
+}
 
 export default function IndexRoute() {
   const today = getToday()
-  // const { dailyLog } = useLoaderData<LoaderData>()
-  // const actionData = useActionData<ActionData>()
+  const { questions } = useLoaderData<LoaderData>()
+  const actionData = useActionData<ActionData>()
 
   return (
     <>
@@ -121,11 +41,19 @@ export default function IndexRoute() {
           </>
         }
       />
-      <section>
+      <ScreenContent>
         {/*{actionData?.formError && (*/}
         {/*  <p className="text-danger-600">{actionData?.formError}</p>*/}
         {/*)}*/}
-      </section>
+        <div className="px-4">
+          <DailyLogForm
+            actionData={actionData}
+            isNew={true}
+            formAction="?index"
+            questions={questions}
+          />
+        </div>
+      </ScreenContent>
     </>
   )
 }

@@ -5,6 +5,7 @@ type FormTextareaProps = {
   name: string
   defaultValue?: string
   placeholder?: string
+  required?: boolean
 }
 
 const FormTextarea: FC<FormTextareaProps> = ({

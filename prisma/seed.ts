@@ -10,13 +10,15 @@ async function seed() {
   )
 
   await Promise.all(
-    await getDailyLogs().map((dailyLog) => {
+    (
+      await getDailyLogs()
+    ).map((dailyLog) => {
       return db.dailyLog.create({ data: dailyLog })
     })
   )
 }
 
-seed()
+void seed()
 
 function getQuestions() {
   return [
@@ -49,7 +51,7 @@ function getQuestions() {
     },
     {
       text: "🍉 Neco jinyho?",
-    }
+    },
   ]
 }
 
