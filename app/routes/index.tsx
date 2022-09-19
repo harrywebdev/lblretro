@@ -11,6 +11,9 @@ import type { ActionData } from "~/forms/DailyLogForm"
 import { json, redirect } from "@remix-run/node"
 import type { Question } from "@prisma/client"
 import { db } from "~/utils/db.server"
+import ScreenBottomBar, {
+  ScreenBottomBarLink,
+} from "~/components/Screen/ScreenBottomBar"
 
 export const action: ActionFunction = dailyLogFormAction(() => {
   return redirect("/")
@@ -41,6 +44,7 @@ export default function IndexRoute() {
           </>
         }
       />
+
       <ScreenContent>
         {/*{actionData?.formError && (*/}
         {/*  <p className="text-danger-600">{actionData?.formError}</p>*/}
@@ -54,6 +58,8 @@ export default function IndexRoute() {
           />
         </div>
       </ScreenContent>
+
+      <ScreenBottomBar activeLink={ScreenBottomBarLink.NewEntry} />
     </>
   )
 }

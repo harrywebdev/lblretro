@@ -1,8 +1,8 @@
-import { Link, useLoaderData } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
 import type { LoaderFunction } from "@remix-run/node"
-import type { DailyLog } from "@prisma/client"
-import { db } from "~/utils/db.server"
 import { json } from "@remix-run/node"
+import type { Prisma } from "@prisma/client"
+import { db } from "~/utils/db.server"
 import ScreenHeader from "~/components/Screen/ScreenHeader"
 import ScreenHeaderNavLink from "~/components/Screen/ScreenHeaderNavLink"
 import PlusIcon from "~/components/Icon/PlusIcon"
@@ -11,7 +11,9 @@ import { format, parseISO } from "date-fns"
 import SecondaryTitle from "~/components/SecondaryTitle"
 import ItemGroup from "~/components/ItemGroup"
 import EntryListItem from "~/components/EntryListItem"
-import type { Prisma } from "@prisma/client"
+import ScreenBottomBar, {
+  ScreenBottomBarLink,
+} from "~/components/Screen/ScreenBottomBar"
 
 type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
   include: { question: true }
@@ -65,6 +67,7 @@ export default function EntriesIndexRoute() {
         title={"Entries"}
         rightAction={<ScreenHeaderNavLink to={"/"} icon={<PlusIcon />} />}
       />
+
       <ScreenContent>
         {dailyLogGroups.map((group) => (
           <div key={group.logDate}>
@@ -81,6 +84,8 @@ export default function EntriesIndexRoute() {
           </div>
         ))}
       </ScreenContent>
+
+      <ScreenBottomBar activeLink={ScreenBottomBarLink.Entries} />
     </>
   )
 }

@@ -20,13 +20,13 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
     bg-neutral-800 text-white
   `
   return (
-    <header className="sticky top-0 left-0 w-full">
+    <header className="sticky top-0 left-0 w-full self-start">
       <div className={className}>
-        <div className="flex items-center justify-between">
+        <nav className="flex items-center justify-between">
           <div className="flex-none w-20">{leftAction}</div>
           <ScreenTitle className="flex-auto">{title}</ScreenTitle>
           <div className="flex-none w-20 flex justify-end">{rightAction}</div>
-        </div>
+        </nav>
         {largeTitle && (
           <h1 className="text-2xl font-bold mt-4">{largeTitle}</h1>
         )}
