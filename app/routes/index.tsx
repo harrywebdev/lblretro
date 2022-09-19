@@ -22,7 +22,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async () => {
-  const questions = await db.question.findMany()
+  const questions = await db.question.findMany({ orderBy: { sequence: "asc" } })
 
   return json({ questions })
 }

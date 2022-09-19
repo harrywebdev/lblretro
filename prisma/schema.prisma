@@ -24,6 +24,8 @@ model DailyLog {
 model Question {
   id            String      @id @default(uuid())
   text          String
+  emoji         String
+  sequence      Int
   dailyLogs     DailyLog[]
   createdAt     DateTime    @default(now())
 }

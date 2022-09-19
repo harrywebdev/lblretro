@@ -23,34 +23,59 @@ void seed()
 function getQuestions() {
   return [
     {
-      text: "🏡 Co jsi udelal pro domacnost?",
+      text: "Co jsi udelal pro domacnost?",
+      emoji: "🏡",
+      sequence: 100,
     },
     {
-      text: "👨‍👩‍👧 Co jsme delali jako rodina?",
+      text: "Co jsme delali jako rodina?",
+      emoji: "👨‍👩‍👧",
+      sequence: 200,
     },
     {
-      text: "🧚🏻‍♀️ Co jsi udelal pro Editu?",
+      text: "Co jsi udelal pro Editu?",
+      emoji: "🧚🏻‍♀️",
+      sequence: 300,
     },
     {
-      text: "❤️ Rande s Editou?",
+      text: "Rande s Editou?",
+      emoji: "❤️",
+      sequence: 400,
     },
     {
-      text: "🤡 Co jsi udelal pro Jonika?",
+      text: "Co jsi udelal pro Jonika?",
+      emoji: "🤡",
+      sequence: 500,
     },
     {
-      text: "👨‍👦 Co jsi delal s Jonim?",
+      text: "Co jsi delal s Jonim?",
+      emoji: "👨‍👦",
+      sequence: 600,
     },
     {
-      text: "☯️ Co jsi udelal pro sebe?",
+      text: "Co jsi udelal pro sebe?",
+      emoji: "☯️",
+      sequence: 700,
     },
     {
-      text: "🎩 Co jsi delal sam?",
+      text: "Co jsi delal sam?",
+      emoji: "🎩",
+      sequence: 800,
     },
     {
-      text: "🍀 Pomohl jsi nekomu jinymu?",
+      text: "Spokojen s praci?",
+      emoji: "🤖",
+      sequence: 900,
     },
     {
-      text: "🍉 Neco jinyho?",
+      text: "Pomohl jsi nekomu jinymu?",
+      emoji: "🍀",
+      sequence: 1000,
+    },
+    {
+      text: "Neco jinyho?",
+      emoji: "🍉",
+      sequence: 1100,
     },
   ]
 }

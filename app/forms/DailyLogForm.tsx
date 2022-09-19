@@ -124,7 +124,7 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
   const questionsAsOptions = questions.map((question) => {
     return {
       value: question.id,
-      label: question.text,
+      label: `${question.emoji} ${question.text}`,
     }
   })
 
