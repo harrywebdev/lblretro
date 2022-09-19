@@ -6,7 +6,9 @@ type ItemGroupProps = {
 }
 
 const ItemGroup: FC<ItemGroupProps> = ({ children, className }) => {
-  return <div className={`mx-3 bg-white rounded-md ${className}`}>{children}</div>
+  return (
+    <div className={`mx-3 bg-white rounded-md ${className}`}>{children}</div>
+  )
 }
 
 export default ItemGroup

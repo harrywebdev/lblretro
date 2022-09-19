@@ -6,6 +6,8 @@ import type { SerializeFrom } from "@remix-run/node"
 import type { Prisma } from "@prisma/client"
 import ListItemDescription from "~/components/ListItem/ListItemDescription"
 import ListItemLeftSide from "~/components/ListItem/ListItemLeftSide"
+import ListItemRightSide from "~/components/ListItem/ListItemRightSide"
+import MinusCircleIcon from "~/components/Icon/MinusCircleIcon"
 
 type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
   include: { question: true }
@@ -13,9 +15,10 @@ type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
 
 type EntryListItemProps = {
   dailyLog: SerializeFrom<DailyLogWithQuestion>
+  isEditing: boolean
 }
 
-const EntryListItem: FC<EntryListItemProps> = ({ dailyLog }) => {
+const EntryListItem: FC<EntryListItemProps> = ({ dailyLog, isEditing }) => {
   return (
     <ListItem>
       <ListItemLeftSide>
@@ -25,6 +28,25 @@ const EntryListItem: FC<EntryListItemProps> = ({ dailyLog }) => {
         <ListItemTitle>{dailyLog.title}</ListItemTitle>
         <ListItemDescription>{dailyLog.content}</ListItemDescription>
       </ListItemContent>
+      {isEditing && (
+        <ListItemRightSide>
+          <form
+            method="post"
+            action={`/entries/${dailyLog.id}`}
+            className="flex"
+          >
+            <input type="hidden" name="redirectTo" value="/entries?edit" />
+            <button
+              type="submit"
+              name="delete"
+              value="yes"
+              className="text-danger-600"
+            >
+              <MinusCircleIcon />
+            </button>
+          </form>
+        </ListItemRightSide>
+      )}
     </ListItem>
   )
 }

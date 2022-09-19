@@ -5,7 +5,6 @@ import type { Prisma } from "@prisma/client"
 import { db } from "~/utils/db.server"
 import ScreenHeader from "~/components/Screen/ScreenHeader"
 import ScreenHeaderNavLink from "~/components/Screen/ScreenHeaderNavLink"
-import PlusIcon from "~/components/Icon/PlusIcon"
 import ScreenContent from "~/components/Screen/ScreenContent"
 import { format, parseISO } from "date-fns"
 import SecondaryTitle from "~/components/SecondaryTitle"
@@ -26,9 +25,12 @@ type DailyLogGroup = {
   items: DailyLogWithQuestion[]
 }
 
-type LoaderData = { dailyLogGroups: DailyLogGroup[] }
+type LoaderData = { dailyLogGroups: DailyLogGroup[]; isEditing: boolean }
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url)
+  const isEditing = url.searchParams.has("edit")
+
   const dailyLogs = await db.dailyLog.findMany({
     orderBy: [
       {
@@ -53,21 +55,32 @@ export const loader: LoaderFunction = async () => {
     return acc
   }, {} as DailyLogGroups)
 
-  const data = { dailyLogGroups: Object.values(dailyLogGroups) }
+  const data = { dailyLogGroups: Object.values(dailyLogGroups), isEditing }
 
   return json(data)
 }
 
 export default function EntriesIndexRoute() {
-  const { dailyLogGroups } = useLoaderData<LoaderData>()
+  const { dailyLogGroups, isEditing } = useLoaderData<LoaderData>()
 
   return (
     <>
-      <ScreenHeader largeTitle={"Entries"} />
+      <ScreenHeader
+        title={"Entries"}
+        rightAction={
+          isEditing ? (
+            <ScreenHeaderNavLink to={"/entries"} label={"Done"} />
+          ) : (
+            <ScreenHeaderNavLink to={"/entries?edit"} label={"Edit"} />
+          )
+        }
+      />
 
       <ScreenContent>
         {dailyLogGroups.length === 0 && (
-          <SecondaryTitle className="px-4 text-primary-500">No Entries yet.</SecondaryTitle>
+          <SecondaryTitle className="px-4 text-primary-500">
+            No Entries yet.
+          </SecondaryTitle>
         )}
 
         {dailyLogGroups.map((group) => (
@@ -78,7 +91,11 @@ export default function EntriesIndexRoute() {
             <ItemGroup>
               <ul>
                 {group.items.map((dailyLog) => (
-                  <EntryListItem key={dailyLog.id} dailyLog={dailyLog} />
+                  <EntryListItem
+                    key={dailyLog.id}
+                    dailyLog={dailyLog}
+                    isEditing={isEditing}
+                  />
                 ))}
               </ul>
             </ItemGroup>

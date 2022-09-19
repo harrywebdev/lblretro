@@ -4,9 +4,7 @@ type TodoListItemRightSideProps = {
   children: ReactNode
 }
 
-const ListItemRightSide: FC<TodoListItemRightSideProps> = ({
-  children,
-}) => {
+const ListItemRightSide: FC<TodoListItemRightSideProps> = ({ children }) => {
   return <span className="pl-3">{children}</span>
 }
 

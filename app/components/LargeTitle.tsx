@@ -5,7 +5,11 @@ type LargeTitleProps = {
 }
 
 const LargeTitle: FC<LargeTitleProps> = ({ children }) => {
-  return <h2 className="text-lg font-semibold leading-relaxed whitespace-nowrap">{children}</h2>
+  return (
+    <h2 className="text-lg font-semibold leading-relaxed whitespace-nowrap">
+      {children}
+    </h2>
+  )
 }
 
 export default LargeTitle
