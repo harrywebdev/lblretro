@@ -11,12 +11,17 @@ import { format, parseISO } from "date-fns"
 import SecondaryTitle from "~/components/SecondaryTitle"
 import ItemGroup from "~/components/ItemGroup"
 import EntryListItem from "~/components/EntryListItem"
+import type { Prisma } from "@prisma/client"
+
+type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
+  include: { question: true }
+}>
 
 type DailyLogGroups = Record<string, DailyLogGroup>
 
 type DailyLogGroup = {
   logDate: Date
-  items: DailyLog[]
+  items: DailyLogWithQuestion[]
 }
 
 type LoaderData = { dailyLogGroups: DailyLogGroup[] }
@@ -28,6 +33,7 @@ export const loader: LoaderFunction = async () => {
         logDate: "desc",
       },
     ],
+    include: { question: true },
   })
 
   const dailyLogGroups = dailyLogs.reduce((acc, cur) => {
