@@ -13,6 +13,7 @@ datasource db {
 model DailyLog {
   id            String      @id @default(uuid())
   logDate       DateTime
+  logDateTxt    String
   question      Question    @relation(fields: [questionId], references: [id])
   questionId    String
   title         String

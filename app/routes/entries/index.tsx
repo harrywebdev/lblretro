@@ -63,12 +63,13 @@ export default function EntriesIndexRoute() {
 
   return (
     <>
-      <ScreenHeader
-        title={"Entries"}
-        rightAction={<ScreenHeaderNavLink to={"/"} icon={<PlusIcon />} />}
-      />
+      <ScreenHeader largeTitle={"Entries"} />
 
       <ScreenContent>
+        {dailyLogGroups.length === 0 && (
+          <SecondaryTitle className="px-4 text-primary-500">No Entries yet.</SecondaryTitle>
+        )}
+
         {dailyLogGroups.map((group) => (
           <div key={group.logDate}>
             <SecondaryTitle className="px-4 mt-6">

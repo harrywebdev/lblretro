@@ -8,14 +8,6 @@ async function seed() {
       return db.question.create({ data: question })
     })
   )
-
-  await Promise.all(
-    (
-      await getDailyLogs()
-    ).map((dailyLog) => {
-      return db.dailyLog.create({ data: dailyLog })
-    })
-  )
 }
 
 void seed()
@@ -63,7 +55,7 @@ function getQuestions() {
       sequence: 800,
     },
     {
-      text: "Spokojen s praci?",
+      text: "Co jsi udelal v praci?",
       emoji: "🤖",
       sequence: 900,
     },
@@ -76,40 +68,6 @@ function getQuestions() {
       text: "Neco jinyho?",
       emoji: "🍉",
       sequence: 1100,
-    },
-  ]
-}
-
-async function getDailyLogs() {
-  // get today's log or create new one
-  const today = new Date()
-
-  // querying by datetime, let's normalize and use the date part only
-  today.setUTCHours(0)
-  today.setUTCMinutes(0)
-  today.setUTCSeconds(0)
-  today.setUTCMilliseconds(0)
-
-  const questions = await db.question.findMany()
-
-  return [
-    {
-      logDate: today,
-      content: "Vycistil si zbran",
-      title: questions[6].text,
-      questionId: questions[6].id,
-    },
-    {
-      logDate: today,
-      content: "Dokoukal taktickej kurz od HT",
-      title: questions[6].text,
-      questionId: questions[6].id,
-    },
-    {
-      logDate: today,
-      content: "Posedel s Joni v bagru pred barakem",
-      title: questions[5].text,
-      questionId: questions[5].id,
     },
   ]
 }

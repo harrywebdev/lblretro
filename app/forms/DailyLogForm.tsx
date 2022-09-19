@@ -102,6 +102,7 @@ export const action = (onSuccess: () => unknown) => {
     const data = {
       content: fields.content.toString(),
       logDate: new Date(fields.logDate),
+      logDateTxt: fields.logDate,
       title: question.text,
       questionId: question.id,
     }
