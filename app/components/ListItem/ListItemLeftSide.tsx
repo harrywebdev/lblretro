@@ -4,8 +4,8 @@ type TodoListItemLeftSideProps = {
   children: ReactNode
 }
 
-const TodoListItemLeftSide: FC<TodoListItemLeftSideProps> = ({ children }) => {
+const ListItemLeftSide: FC<TodoListItemLeftSideProps> = ({ children }) => {
   return <span className="pr-3">{children}</span>
 }
 
-export default TodoListItemLeftSide
+export default ListItemLeftSide

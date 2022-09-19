@@ -4,8 +4,8 @@ type TodoListItemContentProps = {
   children: ReactNode
 }
 
-const TodoListItemContent: FC<TodoListItemContentProps> = ({ children }) => {
+const ListItemContent: FC<TodoListItemContentProps> = ({ children }) => {
   return <span className="flex-auto">{children}</span>
 }
 
-export default TodoListItemContent
+export default ListItemContent

@@ -4,7 +4,7 @@ type TodoListItemTitleProps = {
   children: ReactNode
 }
 
-const TodoListItemTitle: FC<TodoListItemTitleProps> = ({ children }) => {
+const ListItemTitle: FC<TodoListItemTitleProps> = ({ children }) => {
   return (
     <span className="leading-relaxed block font-semibold text-sm">
       {children}
@@ -12,4 +12,4 @@ const TodoListItemTitle: FC<TodoListItemTitleProps> = ({ children }) => {
   )
 }
 
-export default TodoListItemTitle
+export default ListItemTitle

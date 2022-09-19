@@ -4,7 +4,7 @@ type TodoListItemDescriptionProps = {
   children: ReactNode
 }
 
-const TodoListItemDescription: FC<TodoListItemDescriptionProps> = ({ children }) => {
+const ListItemDescription: FC<TodoListItemDescriptionProps> = ({ children }) => {
   return (
     <span className="text-xs text-gray-700 inline-block">
       {children}
@@ -12,4 +12,4 @@ const TodoListItemDescription: FC<TodoListItemDescriptionProps> = ({ children })
   )
 }
 
-export default TodoListItemDescription
+export default ListItemDescription
