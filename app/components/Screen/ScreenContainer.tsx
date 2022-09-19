@@ -5,7 +5,9 @@ type ScreenContainerProps = {
 }
 const ScreenContainer: FC<ScreenContainerProps> = ({ children }) => {
   return (
-    <div className="max-w-full w-96 mx-auto pt-12 antialiased">{children}</div>
+    <div className="max-w-full w-96 pt-safe pb-safe mx-auto antialiased bg-neutral-200">
+      {children}
+    </div>
   )
 }
 export default ScreenContainer
