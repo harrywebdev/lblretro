@@ -92,13 +92,6 @@ export const action = (onSuccess: () => unknown) => {
 
     invariant(question, "Question is required")
 
-    const logDate = new Date(fields.logDate)
-
-    logDate.setUTCHours(0)
-    logDate.setUTCMinutes(0)
-    logDate.setUTCSeconds(0)
-    logDate.setUTCMilliseconds(0)
-
     const data = {
       content: fields.content.toString(),
       logDate: new Date(fields.logDate),

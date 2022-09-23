@@ -14,10 +14,12 @@ model DailyLog {
   id            String      @id @default(uuid())
   logDate       DateTime
   logDateTxt    String
-  question      Question    @relation(fields: [questionId], references: [id])
-  questionId    String
   title         String
   content       String
+  question      Question    @relation(fields: [questionId], references: [id])
+  questionId    String
+  retro         Retro?      @relation(fields: [retroId], references: [id])
+  retroId       String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
@@ -27,6 +29,25 @@ model Question {
   text          String
   emoji         String
   sequence      Int
+  dailyLogs     DailyLog[]
+  area          Area        @relation(fields: [areaId], references: [id])
+  areaId        String
+  createdAt     DateTime    @default(now())
+}
+
+model Area {
+  id            String      @id @default(uuid())
+  text          String
+  emoji         String
+  sequence      Int
+  questions     Question[]
+  createdAt     DateTime    @default(now())
+}
+
+model Retro {
+  id            String      @id @default(uuid())
+  dateFrom      DateTime
+  dateTo        DateTime
   dailyLogs     DailyLog[]
   createdAt     DateTime    @default(now())
 }

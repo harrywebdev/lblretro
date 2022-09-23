@@ -24,7 +24,7 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
       <div className={className}>
         <nav className="flex items-center justify-between">
           <div className="flex-none w-20">{leftAction}</div>
-          <ScreenTitle className="flex-auto">{title}</ScreenTitle>
+          <ScreenTitle className="flex-auto h-7">{title}</ScreenTitle>
           <div className="flex-none w-20 flex justify-end">{rightAction}</div>
         </nav>
         {largeTitle && (

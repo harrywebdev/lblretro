@@ -2,6 +2,7 @@ import ScreenBottomBarNavLink from "~/components/Screen/ScreenBottomBarNavLink"
 import type { FC } from "react"
 import ListIcon from "~/components/Icon/ListIcon"
 import PlusIcon from "~/components/Icon/PlusIcon"
+import ChartBarSquareIcon from "~/components/Icon/ChartBarSquareIcon"
 
 type ScreenBottomBarProps = {
   activeLink: ScreenBottomBarLink
@@ -10,6 +11,7 @@ type ScreenBottomBarProps = {
 export enum ScreenBottomBarLink {
   Entries,
   NewEntry,
+  Retro,
 }
 
 const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
@@ -34,6 +36,12 @@ const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
             label={"New Entry"}
             isActive={activeLink === ScreenBottomBarLink.NewEntry}
             icon={<PlusIcon />}
+          />
+          <ScreenBottomBarNavLink
+            to={"/retro"}
+            label={"Retro"}
+            isActive={activeLink === ScreenBottomBarLink.Retro}
+            icon={<ChartBarSquareIcon />}
           />
         </nav>
       </div>

@@ -23,7 +23,7 @@ const ScreenHeaderNavLink: FC<ScreenHeaderNavLinkProps> = ({
       to={to}
       title={label}
       aria-label={label}
-      className="inline-flex items-center justify-between px-3 py-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 text-secondary-500 focus:ring-primary-500 peer"
+      className="inline-flex items-center justify-between px-0.5 py-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 text-secondary-500 focus:ring-primary-500 peer"
     >
       {Icon}
       {Icon && label ? (

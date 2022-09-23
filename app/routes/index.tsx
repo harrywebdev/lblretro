@@ -40,14 +40,12 @@ export default function IndexRoute() {
         {/*{actionData?.formError && (*/}
         {/*  <p className="text-danger-600">{actionData?.formError}</p>*/}
         {/*)}*/}
-        <div className="px-4">
-          <DailyLogForm
-            actionData={actionData}
-            isNew={true}
-            formAction="?index"
-            questions={questions}
-          />
-        </div>
+        <DailyLogForm
+          actionData={actionData}
+          isNew={true}
+          formAction="?index"
+          questions={questions}
+        />
       </ScreenContent>
 
       <ScreenBottomBar activeLink={ScreenBottomBarLink.NewEntry} />

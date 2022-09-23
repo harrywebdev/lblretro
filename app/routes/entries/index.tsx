@@ -13,6 +13,7 @@ import EntryListItem from "~/components/EntryListItem"
 import ScreenBottomBar, {
   ScreenBottomBarLink,
 } from "~/components/Screen/ScreenBottomBar"
+import ChevronLeftIcon from "~/components/Icon/ChevronLeftIcon"
 
 type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
   include: { question: true }
@@ -25,11 +26,23 @@ type DailyLogGroup = {
   items: DailyLogWithQuestion[]
 }
 
-type LoaderData = { dailyLogGroups: DailyLogGroup[]; isEditing: boolean }
+type LoaderData = {
+  dailyLogGroups: DailyLogGroup[]
+  isEditing: boolean
+  isEditable: boolean
+  backToUrl: string | null
+  backToLabel: string | null
+}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const isEditing = url.searchParams.has("edit")
+  const isEditable = !url.searchParams.has("retroId")
+  const backToUrl = url.searchParams.get("backToUrl")
+  const backToLabel = url.searchParams.get("backToLabel")
+
+  // filtering for either given retro ID or "null" (only records without retro)
+  const limitByRetroId = url.searchParams.get("retroId")
 
   const dailyLogs = await db.dailyLog.findMany({
     orderBy: [
@@ -37,6 +50,14 @@ export const loader: LoaderFunction = async ({ request }) => {
         logDate: "desc",
       },
     ],
+    where: {
+      retroId:
+        limitByRetroId !== null
+          ? {
+              equals: limitByRetroId === "null" ? null : limitByRetroId,
+            }
+          : {},
+    },
     include: { question: true },
   })
 
@@ -55,37 +76,55 @@ export const loader: LoaderFunction = async ({ request }) => {
     return acc
   }, {} as DailyLogGroups)
 
-  const data = { dailyLogGroups: Object.values(dailyLogGroups), isEditing }
+  const data = {
+    dailyLogGroups: Object.values(dailyLogGroups),
+    isEditing,
+    isEditable,
+    backToUrl,
+    backToLabel,
+  }
 
   return json(data)
 }
 
 export default function EntriesIndexRoute() {
-  const { dailyLogGroups, isEditing } = useLoaderData<LoaderData>()
+  const { dailyLogGroups, isEditing, isEditable, backToUrl, backToLabel } =
+    useLoaderData<LoaderData>()
 
   return (
     <>
       <ScreenHeader
         title={"Entries"}
+        leftAction={
+          backToUrl && backToLabel ? (
+            <ScreenHeaderNavLink
+              to={backToUrl}
+              label={backToLabel}
+              icon={<ChevronLeftIcon />}
+            />
+          ) : undefined
+        }
         rightAction={
-          isEditing ? (
-            <ScreenHeaderNavLink to={"/entries"} label={"Done"} />
-          ) : (
-            <ScreenHeaderNavLink to={"/entries?edit"} label={"Edit"} />
-          )
+          isEditable ? (
+            isEditing ? (
+              <ScreenHeaderNavLink to={"/entries"} label={"Done"} />
+            ) : (
+              <ScreenHeaderNavLink to={"/entries?edit"} label={"Edit"} />
+            )
+          ) : undefined
         }
       />
 
       <ScreenContent>
         {dailyLogGroups.length === 0 && (
-          <SecondaryTitle className="px-4 text-primary-500">
+          <SecondaryTitle className="text-primary-500">
             No Entries yet.
           </SecondaryTitle>
         )}
 
-        {dailyLogGroups.map((group) => (
+        {dailyLogGroups.map((group, index) => (
           <div key={group.logDate}>
-            <SecondaryTitle className="px-4 mt-6">
+            <SecondaryTitle className={`${index > 0 ? "mt-6" : ""} mb-1`}>
               {format(parseISO(group.logDate), "do MMM, y")}
             </SecondaryTitle>
             <ItemGroup>
