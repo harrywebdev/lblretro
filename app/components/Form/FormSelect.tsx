@@ -21,7 +21,7 @@ const FormSelect: FC<FormSelectProps> = (props) => {
       <select
         name={name}
         id={id}
-        className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 appearance-none"
+        className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 appearance-none bg-white"
         defaultValue={defaultValue}
         {...attrs}
       >

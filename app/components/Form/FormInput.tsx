@@ -19,7 +19,7 @@ const FormInput: FC<FormInputProps> = (props) => {
       name={name}
       id={id}
       autoComplete={autoComplete}
-      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 appearance-none"
+      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 appearance-none bg-white"
       placeholder={placeholder}
       defaultValue={defaultValue}
       {...attrs}
