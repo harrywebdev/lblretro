@@ -1,4 +1,5 @@
 import type { FC } from "react"
+import ChevronDownIcon from "~/components/Icon/ChevronDownIcon"
 
 type Option = {
   value: string
@@ -16,21 +17,26 @@ type FormSelectProps = {
 const FormSelect: FC<FormSelectProps> = (props) => {
   const { id, name, defaultValue, options, ...attrs } = props
   return (
-    <select
-      name={name}
-      id={id}
-      className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2"
-      defaultValue={defaultValue}
-      {...attrs}
-    >
-      {options.map((option) => {
-        return (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        )
-      })}
-    </select>
+    <span className="relative block mt-1">
+      <select
+        name={name}
+        id={id}
+        className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 appearance-none"
+        defaultValue={defaultValue}
+        {...attrs}
+      >
+        {options.map((option) => {
+          return (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          )
+        })}
+      </select>
+      <span className="pointer-events-none absolute top-3 right-3 text-sm">
+        <ChevronDownIcon />
+      </span>
+    </span>
   )
 }
 
