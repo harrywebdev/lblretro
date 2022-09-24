@@ -3,6 +3,7 @@ import type { FC } from "react"
 import ListIcon from "~/components/Icon/ListIcon"
 import PlusIcon from "~/components/Icon/PlusIcon"
 import ChartBarSquareIcon from "~/components/Icon/ChartBarSquareIcon"
+import Cog8ToothIcon from "~/components/Icon/Cog8ToothIcon"
 
 type ScreenBottomBarProps = {
   activeLink: ScreenBottomBarLink
@@ -12,6 +13,7 @@ export enum ScreenBottomBarLink {
   Entries,
   NewEntry,
   Retro,
+  Settings,
 }
 
 const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
@@ -42,6 +44,12 @@ const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
             label={"Retro"}
             isActive={activeLink === ScreenBottomBarLink.Retro}
             icon={<ChartBarSquareIcon />}
+          />
+          <ScreenBottomBarNavLink
+            to={"/settings"}
+            label={"Settings"}
+            isActive={activeLink === ScreenBottomBarLink.Settings}
+            icon={<Cog8ToothIcon />}
           />
         </nav>
       </div>
