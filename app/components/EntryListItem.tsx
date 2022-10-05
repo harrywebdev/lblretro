@@ -20,7 +20,13 @@ type EntryListItemProps = {
 
 const EntryListItem: FC<EntryListItemProps> = ({ dailyLog, isEditing }) => {
   return (
-    <ListItem>
+    <ListItem
+      link={
+        isEditing
+          ? { to: `/entries/${dailyLog.id}`, title: "Edit Entry" }
+          : undefined
+      }
+    >
       <ListItemLeftSide>
         <span className="text-2xl">{dailyLog.question.emoji}</span>
       </ListItemLeftSide>

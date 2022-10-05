@@ -4,7 +4,7 @@ import FormField from "~/components/Form/FormField"
 import type { ActionFunction, SerializeFrom } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { db } from "~/utils/db.server"
-import type { FC } from "react"
+import type { FC, ReactNode } from "react"
 import type { DailyLog } from "@prisma/client"
 import Button from "~/components/Button"
 import FormError from "~/components/Form/FormError"
@@ -35,7 +35,8 @@ type DailyLogFormProps = {
   isNew: boolean
   questions: SerializeFrom<Question[]>
   actionData?: SerializeFrom<ActionData>
-  dailyLog?: DailyLog
+  dailyLog?: SerializeFrom<DailyLog>
+  children?: ReactNode
 }
 
 const badRequest = (data: ActionData) => json(data, { status: 400 })
@@ -52,20 +53,22 @@ const validateLogDate = (value: any) => {
     : "Date is invalid"
 }
 
-export const action = (onSuccess: () => unknown) => {
+export const action = (onSuccess: (redirectTo: string) => unknown) => {
   const dailyLogFormAction: ActionFunction = async ({ request, params }) => {
     const form: FormData = await request.formData()
 
-    // // not supported yet
-    // if (form.get("delete") === "yes") {
-    //   await db.dailyLog.delete({
-    //     where: {
-    //       id: params.dailyLogId,
-    //     },
-    //   })
-    //
-    //   return onSuccess()
-    // }
+    const redirectTo = getFormDataValueAsString(form, "redirectTo", "/")
+
+    // not supported yet
+    if (form.get("delete") === "yes") {
+      await db.dailyLog.delete({
+        where: {
+          id: params.entryId,
+        },
+      })
+
+      return onSuccess(redirectTo)
+    }
 
     const fields = {
       content: getFormDataValueAsString(form, "content"),
@@ -100,18 +103,18 @@ export const action = (onSuccess: () => unknown) => {
       questionId: question.id,
     }
 
-    if (!params.dailyLogId) {
+    if (!params.entryId) {
       await db.dailyLog.create({ data })
     } else {
       await db.dailyLog.update({
         where: {
-          id: params.dailyLogId,
+          id: params.entryId,
         },
         data,
       })
     }
 
-    return onSuccess()
+    return onSuccess(redirectTo)
   }
 
   return dailyLogFormAction
@@ -127,6 +130,7 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
   isNew,
   formAction,
   questions,
+  children,
 }) => {
   const questionsAsOptions = questions.map((question) => {
     return {
@@ -139,7 +143,7 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
     typeof actionData?.fields?.logDate === "string"
       ? actionData?.fields?.logDate
       : dailyLog?.logDate
-      ? formatDateForInput(dailyLog.logDate)
+      ? formatDateForInput(new Date(dailyLog.logDate))
       : formatDateForInput(getToday())
 
   return (
@@ -232,6 +236,8 @@ const DailyLogForm: FC<DailyLogFormProps> = ({
           <Button primary type="submit" label={!isNew ? "Update" : "Create"} />
         </div>
       </FormFieldGroup>
+
+      {children}
     </form>
   )
 }
