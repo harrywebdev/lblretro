@@ -40,6 +40,10 @@ export interface ActivityHashtagInterface {
   parent?: ActivityHashtagInterface
 }
 
+export type ActivityTypeOrHashtag =
+  | ActivityTypeInterface
+  | ActivityHashtagInterface
+
 export const FreeTimeActivityType: ActivityTypeInterface = {
   id: "free_time_activity_type",
   name: "Free Time",
@@ -153,11 +157,49 @@ export const AltruismGiveHandHashtag: ActivityHashtagInterface = {
   id: "altruism_give_hand_hashtag",
   name: "#givehand",
   icon: <RiHandHeartLine />,
-  parent: HomeHashtag,
+  parent: AltruismHashtag,
 }
 
 export const UnknownHashtag: ActivityHashtagInterface = {
   id: "unknown_hashtag",
   name: "#unknown",
   icon: <VscWorkspaceUnknown />,
+}
+
+const activityTypes = [
+  FreeTimeActivityType,
+  ParentsOnlyActivityType,
+  PartialFamilyActivityType,
+  MeTimeActivityType,
+  ChildActivityType,
+  WholeFamilyActivityType,
+  WorkActivityType,
+]
+
+const activityHashtags = [
+  HealthHashtag,
+  HealthyMindHashtag,
+  HealthyBodyHashtag,
+  HealthySpiritHashtag,
+  HomeHashtag,
+  HomeRepairHashtag,
+  HomeUpgradeHashtag,
+  AltruismHashtag,
+  AltruismCharityHashtag,
+  AltruismGiveHandHashtag,
+  UnknownHashtag,
+]
+
+export const findChildrenForActivityTypeOrHashtag = (
+  item: ActivityTypeInterface | ActivityHashtagInterface
+) => {
+  const foundActivityTypes = activityTypes.filter(
+    (type) => type.parent === item
+  )
+
+  if (foundActivityTypes.length > 0) {
+    return foundActivityTypes
+  }
+
+  return activityHashtags.filter((type) => type.parent === item)
 }

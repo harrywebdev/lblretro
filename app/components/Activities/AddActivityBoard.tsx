@@ -1,31 +1,25 @@
 import ActivityTypeButton, {
   ActivityTypeButtonState,
 } from "~/components/Activities/ActivityTypeButton"
-import {
+import type {
   ActivityHashtagInterface,
   ActivityTypeInterface,
-  UnknownHashtag,
+  ActivityTypeOrHashtag,
 } from "~/models/models"
 import {
+  AltruismHashtag,
   ChildActivityType,
   FreeTimeActivityType,
   HealthHashtag,
-  HealthyBodyHashtag,
-  HealthyMindHashtag,
-  HealthySpiritHashtag,
   HomeHashtag,
-  HomeRepairHashtag,
-  HomeUpgradeHashtag,
   MeTimeActivityType,
   ParentsOnlyActivityType,
   WholeFamilyActivityType,
   WorkActivityType,
 } from "~/models/models"
-import { useState } from "react"
-import ActivityHashtagButton, {
-  ActivityHashtagButtonState,
-} from "~/components/Activities/ActivityHashtagButton"
+import { useCallback, useState } from "react"
 import SecondaryTitle from "~/components/SecondaryTitle"
+import ActivityButtonGroup from "~/components/Activities/ActivityButtonGroup"
 
 const AddActivityBoard = () => {
   const [firstLevelChoice, setFirstLevelChoice] =
@@ -38,18 +32,39 @@ const AddActivityBoard = () => {
     ActivityHashtagInterface[]
   >([])
 
-  const handleActivityHashtagClick = (
-    activityHashtag: ActivityHashtagInterface
-  ) => {
-    if (activityHashtags.includes(activityHashtag)) {
-      const rejectHashtag = (stateHashtag: ActivityHashtagInterface) =>
-        stateHashtag !== activityHashtag
-      setActivityHashtag(activityHashtags.filter(rejectHashtag))
-      return
-    }
+  const [activitySelection, setActivitySelection] = useState<
+    ActivityTypeOrHashtag[]
+  >([])
 
-    setActivityHashtag([...activityHashtags, activityHashtag])
-  }
+  const handleActivityGroupChange = useCallback(
+    (
+      groupParent: ActivityTypeOrHashtag,
+      selectedItem: ActivityTypeOrHashtag | undefined
+    ) => {
+      // remove any existing choice
+      if (typeof selectedItem === "undefined") {
+        const rejectItems = (item: ActivityHashtagInterface) => {
+          return item !== groupParent && item.parent !== groupParent
+        }
+        setActivitySelection(activitySelection.filter(rejectItems))
+        return
+      }
+
+      let newActivitySelection = [...activitySelection]
+
+      // add choice if it doesn't exist
+      if (!newActivitySelection.includes(groupParent)) {
+        newActivitySelection.push(groupParent)
+      }
+
+      if (!newActivitySelection.includes(selectedItem)) {
+        newActivitySelection.push(selectedItem)
+      }
+
+      setActivitySelection(newActivitySelection)
+    },
+    [activitySelection]
+  )
 
   const freeTimeActivityTypeState =
     firstLevelChoice === FreeTimeActivityType
@@ -161,88 +176,31 @@ const AddActivityBoard = () => {
             Add Hashtags
           </SecondaryTitle>
           <div className="flex justify-around items-center relative mb-3 flex-wrap">
-            <ActivityHashtagButton
-              state={
-                activityHashtags.includes(HealthHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HealthHashtag}
-              onClick={() => handleActivityHashtagClick(HealthHashtag)}
+            <ActivityButtonGroup
+              groupParent={HealthHashtag}
+              onChange={handleActivityGroupChange}
+              className={"mb-3 mr-3"}
             />
-            <ActivityHashtagButton
-              state={
-                !activityHashtags.includes(HealthHashtag)
-                  ? ActivityHashtagButtonState.Invisible
-                  : activityHashtags.includes(HealthyMindHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HealthyMindHashtag}
-              onClick={() => handleActivityHashtagClick(HealthyMindHashtag)}
+            <ActivityButtonGroup
+              groupParent={HomeHashtag}
+              onChange={handleActivityGroupChange}
+              className={"mb-3 mr-3"}
             />
-            <ActivityHashtagButton
-              state={
-                !activityHashtags.includes(HealthHashtag)
-                  ? ActivityHashtagButtonState.Invisible
-                  : activityHashtags.includes(HealthyBodyHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HealthyBodyHashtag}
-              onClick={() => handleActivityHashtagClick(HealthyBodyHashtag)}
+            <ActivityButtonGroup
+              groupParent={AltruismHashtag}
+              onChange={handleActivityGroupChange}
+              className={"mb-3 mr-3"}
             />
-            <ActivityHashtagButton
-              state={
-                !activityHashtags.includes(HealthHashtag)
-                  ? ActivityHashtagButtonState.Invisible
-                  : activityHashtags.includes(HealthySpiritHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HealthySpiritHashtag}
-              onClick={() => handleActivityHashtagClick(HealthySpiritHashtag)}
-            />
-            <ActivityHashtagButton
-              state={
-                activityHashtags.includes(HomeHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HomeHashtag}
-              onClick={() => handleActivityHashtagClick(HomeHashtag)}
-            />
-            <ActivityHashtagButton
-              state={
-                !activityHashtags.includes(HomeHashtag)
-                  ? ActivityHashtagButtonState.Invisible
-                  : activityHashtags.includes(HomeRepairHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HomeRepairHashtag}
-              onClick={() => handleActivityHashtagClick(HomeRepairHashtag)}
-            />
-            <ActivityHashtagButton
-              state={
-                !activityHashtags.includes(HomeHashtag)
-                  ? ActivityHashtagButtonState.Invisible
-                  : activityHashtags.includes(HomeUpgradeHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={HomeUpgradeHashtag}
-              onClick={() => handleActivityHashtagClick(HomeUpgradeHashtag)}
-            />
-            <ActivityHashtagButton
-              state={
-                activityHashtags.includes(UnknownHashtag)
-                  ? ActivityHashtagButtonState.Selected
-                  : ActivityHashtagButtonState.WaitingForSelection
-              }
-              activityHashtag={UnknownHashtag}
-              onClick={() => handleActivityHashtagClick(UnknownHashtag)}
-            />
+
+            {/*<ActivityHashtagButton*/}
+            {/*  state={*/}
+            {/*    activityHashtags.includes(UnknownHashtag)*/}
+            {/*      ? ActivityHashtagButtonState.Selected*/}
+            {/*      : ActivityHashtagButtonState.WaitingForSelection*/}
+            {/*  }*/}
+            {/*  activityHashtag={UnknownHashtag}*/}
+            {/*  onClick={() => handleActivityHashtagClick(UnknownHashtag)}*/}
+            {/*/>*/}
           </div>
         </div>
       )}

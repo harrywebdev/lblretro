@@ -13,7 +13,7 @@ module.exports = {
       gray: colors.gray,
       white: colors.white,
       danger: colors.red,
-      txt01: colors.gray["700"],
+      txt01: colors.gray["800"],
     },
   },
   plugins: [

@@ -615,16 +615,6 @@ html {
   margin-right: auto;
 }
 
-.my-3 {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
 .-ml-1 {
   margin-left: -0.25rem;
 }
@@ -643,6 +633,10 @@ html {
 
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .ml-3 {
@@ -665,10 +659,6 @@ html {
   margin-left: 1rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
 .ml-2 {
   margin-left: 0.5rem;
 }
@@ -683,6 +673,10 @@ html {
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mr-3 {
+  margin-right: 0.75rem;
 }
 
 .block {
@@ -953,20 +947,16 @@ html {
   padding-bottom: 0.5rem;
 }
 
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
 .pr-3 {
   padding-right: 0.75rem;
 }
 
 .pl-3 {
   padding-left: 0.75rem;
-}
-
-.pt-1 {
-  padding-top: 0.25rem;
-}
-
-.pt-2 {
-  padding-top: 0.5rem;
 }
 
 .text-center {
@@ -1061,6 +1051,11 @@ html {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.text-txt01 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .text-primary-600 {
