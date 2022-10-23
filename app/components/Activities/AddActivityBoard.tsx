@@ -16,7 +16,8 @@ const AddActivityBoard = () => {
   const [firstLevelChoice, setFirstLevelChoice] =
     useState<ActivityTypeInterface>()
 
-  console.log("firstLevelChoice", firstLevelChoice)
+  const [freeTimeOptionsChoice, setFreeTimeOptionsChoice] =
+    useState<ActivityTypeInterface>()
 
   const freeTimeActivityTypeState =
     firstLevelChoice === FreeTimeActivityType
@@ -32,9 +33,12 @@ const AddActivityBoard = () => {
       ? ActivityButtonState.WaitingForSelection
       : ActivityButtonState.Discarded
 
+  const showFreeTimeActivityOptions =
+    freeTimeActivityTypeState === ActivityButtonState.Selected
+
   return (
     <div className="p-3">
-      <div className="flex justify-around items-center relative">
+      <div className="flex justify-around items-center relative mb-4">
         <ActivityButton
           state={freeTimeActivityTypeState}
           activityType={FreeTimeActivityType}
@@ -56,31 +60,54 @@ const AddActivityBoard = () => {
           }
         />
       </div>
-      <ActivityButton
-        state={ActivityButtonState.Invisible}
-        activityType={ParentsOnlyActivityType}
-        onClick={() => {}}
-      />
-      {/*<ActivityButton*/}
-      {/*  state={ActivityButtonState.Invisible}*/}
-      {/*  activityType={PartialFamilyActivityType}*/}
-      {/*  onClick=() => {}*/}
-      {/*/>*/}
-      <ActivityButton
-        state={ActivityButtonState.Invisible}
-        activityType={MeTimeActivityType}
-        onClick={() => {}}
-      />
-      <ActivityButton
-        state={ActivityButtonState.Invisible}
-        activityType={ChildActivityType}
-        onClick={() => {}}
-      />
-      <ActivityButton
-        state={ActivityButtonState.Invisible}
-        activityType={WholeFamilyActivityType}
-        onClick={() => {}}
-      />
+      {showFreeTimeActivityOptions && (
+        <div className="flex justify-around items-center relative mb-3">
+          <ActivityButton
+            state={
+              freeTimeOptionsChoice === ParentsOnlyActivityType
+                ? ActivityButtonState.Selected
+                : typeof freeTimeOptionsChoice === "undefined"
+                ? ActivityButtonState.WaitingForSelection
+                : ActivityButtonState.Discarded
+            }
+            activityType={ParentsOnlyActivityType}
+            onClick={() => setFreeTimeOptionsChoice(ParentsOnlyActivityType)}
+          />
+          <ActivityButton
+            state={
+              freeTimeOptionsChoice === WholeFamilyActivityType
+                ? ActivityButtonState.Selected
+                : typeof freeTimeOptionsChoice === "undefined"
+                ? ActivityButtonState.WaitingForSelection
+                : ActivityButtonState.Discarded
+            }
+            activityType={WholeFamilyActivityType}
+            onClick={() => setFreeTimeOptionsChoice(WholeFamilyActivityType)}
+          />
+          <ActivityButton
+            state={
+              freeTimeOptionsChoice === ChildActivityType
+                ? ActivityButtonState.Selected
+                : typeof freeTimeOptionsChoice === "undefined"
+                ? ActivityButtonState.WaitingForSelection
+                : ActivityButtonState.Discarded
+            }
+            activityType={ChildActivityType}
+            onClick={() => setFreeTimeOptionsChoice(ChildActivityType)}
+          />
+          <ActivityButton
+            state={
+              freeTimeOptionsChoice === MeTimeActivityType
+                ? ActivityButtonState.Selected
+                : typeof freeTimeOptionsChoice === "undefined"
+                ? ActivityButtonState.WaitingForSelection
+                : ActivityButtonState.Discarded
+            }
+            activityType={MeTimeActivityType}
+            onClick={() => setFreeTimeOptionsChoice(MeTimeActivityType)}
+          />
+        </div>
+      )}
     </div>
   )
 }

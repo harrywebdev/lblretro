@@ -49,7 +49,7 @@ export const FreeTimeActivityType: ActivityTypeInterface = {
 export const ParentsOnlyActivityType: ProportionalActivityTypeInterface = {
   id: "parents_only_activity_type",
   name: "Parents Only",
-  icon: <HiHeart />,
+  icon: <HiHeart style={{ height: "1em" }} />,
   weight: 8,
 }
 
@@ -119,13 +119,13 @@ export const HealthySpiritHashtag: ActivityHashtagInterface = {
 export const HomeHashtag: ActivityHashtagInterface = {
   id: "home_hashtag",
   name: "#home",
-  icon: <HiHomeModern />,
+  icon: <HiHomeModern style={{ height: "1em" }} />,
 }
 
 export const HomeRepairHashtag: ActivityHashtagInterface = {
   id: "home_repair_hashtag",
   name: "#repair",
-  icon: <HiWrenchScrewdriver />,
+  icon: <HiWrenchScrewdriver style={{ height: "1em" }} />,
   parent: HomeHashtag,
 }
 

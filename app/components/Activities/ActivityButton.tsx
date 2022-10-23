@@ -28,13 +28,13 @@ const ActivityButton: FC<ActivityButtonProps> = ({
       stateStyle = "hidden"
       break
     case ActivityButtonState.WaitingForSelection:
-      stateStyle = "text-5xl p-3"
+      stateStyle = "text-4xl p-3"
       break
     case ActivityButtonState.Selected:
-      stateStyle = "text-3xl bg-gray-800 text-white p-3"
+      stateStyle = "text-5xl bg-gray-800 text-white p-3"
       break
     case ActivityButtonState.Discarded:
-      stateStyle = "text-3xl"
+      stateStyle = "text-4xl"
       break
   }
   return (
