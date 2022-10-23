@@ -91,6 +91,7 @@ const AddActivityBoard = () => {
   return (
     <div className="p-3">
       <div className="flex justify-around items-center relative mb-4">
+        {/* TODO: add option for anything just to save a hashtag info without categorization (like charity) */}
         <ActivityTypeButton
           state={freeTimeActivityTypeState}
           activityType={FreeTimeActivityType}
