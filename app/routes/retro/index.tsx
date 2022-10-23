@@ -109,7 +109,11 @@ export default function RetroIndexRoute() {
             </SecondaryTitle>
 
             <p className="mt-2">
-              <ButtonLink href={"/"} label={"Add New Entry"} primary />
+              <ButtonLink
+                href={"/entries/new"}
+                label={"Add New Entry"}
+                primary
+              />
             </p>
           </>
         )}

@@ -44,7 +44,7 @@ const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
             icon={<ListBulletIcon className="w-4 h-4" />}
           />
           <ScreenBottomBarNavLink
-            to={"/"}
+            to={"/entries/new"}
             label={"New Entry"}
             isActive={activeLink === ScreenBottomBarLink.NewEntry}
             icon={<PlusIcon className="w-4 h-4" />}

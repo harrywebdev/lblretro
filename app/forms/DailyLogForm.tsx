@@ -57,7 +57,11 @@ export const action = (onSuccess: (redirectTo: string) => unknown) => {
   const dailyLogFormAction: ActionFunction = async ({ request, params }) => {
     const form: FormData = await request.formData()
 
-    const redirectTo = getFormDataValueAsString(form, "redirectTo", "/")
+    const redirectTo = getFormDataValueAsString(
+      form,
+      "redirectTo",
+      "/entries/new"
+    )
 
     // not supported yet
     if (form.get("delete") === "yes") {
