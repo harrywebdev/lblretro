@@ -1,22 +1,22 @@
 import type { FC } from "react"
-import type { ActivityTypeInterface } from "~/models/models"
+import type { ActivityHashtagInterface } from "~/models/models"
 
-type ActivityButtonProps = {
-  activityType: ActivityTypeInterface
+type ActivityHashtagButtonProps = {
+  activityHashtag: ActivityHashtagInterface
   onClick: (...args: any) => void
-  state: ActivityButtonState
+  state: ActivityHashtagButtonState
   className?: string
 }
 
-export enum ActivityButtonState {
+export enum ActivityHashtagButtonState {
   Invisible,
   WaitingForSelection,
   Selected,
   Discarded,
 }
 
-const ActivityButton: FC<ActivityButtonProps> = ({
-  activityType,
+const ActivityHashtagButton: FC<ActivityHashtagButtonProps> = ({
+  activityHashtag,
   state,
   onClick,
   className,
@@ -24,16 +24,16 @@ const ActivityButton: FC<ActivityButtonProps> = ({
   let stateStyle = ""
 
   switch (state) {
-    case ActivityButtonState.Invisible:
+    case ActivityHashtagButtonState.Invisible:
       stateStyle = "hidden"
       break
-    case ActivityButtonState.WaitingForSelection:
+    case ActivityHashtagButtonState.WaitingForSelection:
       stateStyle = "text-4xl p-3"
       break
-    case ActivityButtonState.Selected:
+    case ActivityHashtagButtonState.Selected:
       stateStyle = "text-5xl bg-gray-800 text-white p-3"
       break
-    case ActivityButtonState.Discarded:
+    case ActivityHashtagButtonState.Discarded:
       stateStyle = "text-4xl"
       break
   }
@@ -44,9 +44,9 @@ const ActivityButton: FC<ActivityButtonProps> = ({
       }`}
       onClick={() => onClick()}
     >
-      {activityType.icon}
+      {activityHashtag.icon}
     </button>
   )
 }
 
-export default ActivityButton
+export default ActivityHashtagButton
