@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import ChevronDownIcon from "~/components/Icon/ChevronDownIcon"
+import { ChevronDownIcon } from "@heroicons/react/24/solid"
 
 type Option = {
   value: string
@@ -34,7 +34,7 @@ const FormSelect: FC<FormSelectProps> = (props) => {
         })}
       </select>
       <span className="pointer-events-none absolute top-3 right-3 text-sm">
-        <ChevronDownIcon />
+        <ChevronDownIcon className="w-4 h-4" />
       </span>
     </span>
   )

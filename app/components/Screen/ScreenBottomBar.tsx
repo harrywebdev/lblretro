@@ -1,9 +1,11 @@
 import ScreenBottomBarNavLink from "~/components/Screen/ScreenBottomBarNavLink"
 import type { FC } from "react"
-import ListIcon from "~/components/Icon/ListIcon"
-import PlusIcon from "~/components/Icon/PlusIcon"
-import ChartBarSquareIcon from "~/components/Icon/ChartBarSquareIcon"
-import Cog8ToothIcon from "~/components/Icon/Cog8ToothIcon"
+import { ListBulletIcon } from "@heroicons/react/24/solid"
+import { PlusIcon } from "@heroicons/react/24/solid"
+import { ChartBarSquareIcon as ChartBarSquareIconOutline } from "@heroicons/react/24/outline"
+import { ChartBarSquareIcon as ChartBarSquareIconSolid } from "@heroicons/react/24/solid"
+import { Cog8ToothIcon as Cog8ToothIconSolid } from "@heroicons/react/24/solid"
+import { Cog8ToothIcon as Cog8ToothIconOutline } from "@heroicons/react/24/outline"
 
 type ScreenBottomBarProps = {
   activeLink: ScreenBottomBarLink
@@ -31,25 +33,37 @@ const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
             to={"/entries"}
             label={"Entries"}
             isActive={activeLink === ScreenBottomBarLink.Entries}
-            icon={<ListIcon />}
+            icon={<ListBulletIcon className="w-4 h-4" />}
           />
           <ScreenBottomBarNavLink
             to={"/"}
             label={"New Entry"}
             isActive={activeLink === ScreenBottomBarLink.NewEntry}
-            icon={<PlusIcon />}
+            icon={<PlusIcon className="w-4 h-4" />}
           />
           <ScreenBottomBarNavLink
             to={"/retro"}
             label={"Retro"}
             isActive={activeLink === ScreenBottomBarLink.Retro}
-            icon={<ChartBarSquareIcon />}
+            icon={
+              activeLink === ScreenBottomBarLink.Retro ? (
+                <ChartBarSquareIconSolid className="w-4 h-4" />
+              ) : (
+                <ChartBarSquareIconOutline className="w-4 h-4" />
+              )
+            }
           />
           <ScreenBottomBarNavLink
             to={"/settings"}
             label={"Settings"}
             isActive={activeLink === ScreenBottomBarLink.Settings}
-            icon={<Cog8ToothIcon />}
+            icon={
+              activeLink === ScreenBottomBarLink.Settings ? (
+                <Cog8ToothIconSolid className="w-4 h-4" />
+              ) : (
+                <Cog8ToothIconOutline className="w-4 h-4" />
+              )
+            }
           />
         </nav>
       </div>

@@ -2,7 +2,7 @@ import AreaCount from "~/components/AreaCount"
 import ListItem from "~/components/ListItem/ListItem"
 import ListItemContent from "~/components/ListItem/ListItemContent"
 import ListItemRightSide from "~/components/ListItem/ListItemRightSide"
-import ChevronRightIcon from "~/components/Icon/ChevronRightIcon"
+import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import ItemGroup from "~/components/ItemGroup"
 import type { FC } from "react"
 import type { Area } from "@prisma/client"
@@ -56,7 +56,7 @@ const RetroEmojiOverview: FC<RetroEmojiOverviewProps> = ({
 
           <ListItemRightSide>
             <span className={"text-secondary-500"}>
-              <ChevronRightIcon />
+              <ChevronRightIcon className="w-4 h-4" />
             </span>
           </ListItemRightSide>
         </ListItem>
