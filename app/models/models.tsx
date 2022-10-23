@@ -3,7 +3,7 @@ import {
   CgYinyang,
   FaFirstAid,
   FaRobot,
-  GiBalloons,
+  // GiBalloons,
   GiBrain,
   GiFruitTree,
   GiTopHat,
@@ -11,6 +11,7 @@ import {
   HiHomeModern,
   HiWrenchScrewdriver,
   IoBarbell,
+  IoPeopleCircleOutline,
   MdHealthAndSafety,
   MdOutlineFamilyRestroom,
   RiHandCoinLine,
@@ -64,7 +65,8 @@ export const ParentsOnlyActivityType: ProportionalActivityTypeInterface = {
 export const PartialFamilyActivityType: ActivityTypeInterface = {
   id: "partial_family_activity_type",
   name: "Partial Family",
-  icon: <GiBalloons />,
+  // icon: <GiBalloons />,
+  icon: <IoPeopleCircleOutline />,
 }
 
 export const MeTimeActivityType: ProportionalActivityTypeInterface = {

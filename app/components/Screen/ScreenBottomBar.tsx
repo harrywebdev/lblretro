@@ -6,6 +6,7 @@ import { ChartBarSquareIcon as ChartBarSquareIconOutline } from "@heroicons/reac
 import { ChartBarSquareIcon as ChartBarSquareIconSolid } from "@heroicons/react/24/solid"
 import { Cog8ToothIcon as Cog8ToothIconSolid } from "@heroicons/react/24/solid"
 import { Cog8ToothIcon as Cog8ToothIconOutline } from "@heroicons/react/24/outline"
+import { BeakerIcon } from "@heroicons/react/24/solid"
 
 type ScreenBottomBarProps = {
   activeLink: ScreenBottomBarLink
@@ -16,6 +17,7 @@ export enum ScreenBottomBarLink {
   NewEntry,
   Retro,
   Settings,
+  V2,
 }
 
 const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
@@ -29,6 +31,12 @@ const ScreenBottomBar: FC<ScreenBottomBarProps> = ({ activeLink }) => {
     <footer className="sticky bottom-0 left-0 w-full self-end">
       <div className={className}>
         <nav className="flex items-center justify-between">
+          <ScreenBottomBarNavLink
+            to={"/v2"}
+            label={"V2"}
+            isActive={activeLink === ScreenBottomBarLink.V2}
+            icon={<BeakerIcon className="w-4 h-4" />}
+          />
           <ScreenBottomBarNavLink
             to={"/entries"}
             label={"Entries"}
