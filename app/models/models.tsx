@@ -1,24 +1,12 @@
-import {
-  BsHeartFill,
-  CgYinyang,
-  FaFirstAid,
-  FaRobot,
-  // GiBalloons,
-  GiBrain,
-  GiFruitTree,
-  GiTopHat,
-  GiUpgrade,
-  HiHomeModern,
-  HiWrenchScrewdriver,
-  IoBarbell,
-  IoPeopleCircleOutline,
-  MdHealthAndSafety,
-  MdOutlineFamilyRestroom,
-  RiHandCoinLine,
-  RiHandHeartLine,
-  TbMoodBoy,
-  VscWorkspaceUnknown,
-} from "react-icons/all"
+import { CgYinyang } from "react-icons/cg"
+import { FaFirstAid, FaRobot } from "react-icons/fa"
+import { GiFruitTree, GiBrain, GiTopHat, GiUpgrade } from "react-icons/gi"
+import { HiHomeModern, HiWrenchScrewdriver, HiHeart } from "react-icons/hi2"
+import { IoBarbell, IoPeopleCircleOutline } from "react-icons/io5"
+import { MdHealthAndSafety, MdOutlineFamilyRestroom } from "react-icons/md"
+import { RiHandCoinLine, RiHandHeartLine } from "react-icons/ri"
+import { TbMoodBoy } from "react-icons/tb"
+import { VscWorkspaceUnknown } from "react-icons/vsc"
 import type { ReactNode } from "react"
 
 export interface ActivityTypeInterface {
@@ -58,14 +46,13 @@ export const FreeTimeActivityType: ActivityTypeInterface = {
 export const ParentsOnlyActivityType: ProportionalActivityTypeInterface = {
   id: "parents_only_activity_type",
   name: "Parents Only",
-  icon: <BsHeartFill />,
+  icon: <HiHeart />,
   weight: 8,
 }
 
 export const PartialFamilyActivityType: ActivityTypeInterface = {
   id: "partial_family_activity_type",
   name: "Partial Family",
-  // icon: <GiBalloons />,
   icon: <IoPeopleCircleOutline />,
 }
 

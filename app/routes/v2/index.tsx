@@ -5,6 +5,7 @@ import ScreenBottomBar, {
 } from "~/components/Screen/ScreenBottomBar"
 import ItemGroup from "~/components/ItemGroup"
 import psrDiagram from "~/images/psr_diagram.png"
+import AddActivityBoard from "~/components/Activities/AddActivityBoard"
 
 export default function V2IndexRoute() {
   return (
@@ -15,6 +16,8 @@ export default function V2IndexRoute() {
         <ItemGroup className="p-3 mb-3">
           <img src={psrDiagram} alt="PSR diagram" />
         </ItemGroup>
+
+        <AddActivityBoard />
       </ScreenContent>
 
       <ScreenBottomBar activeLink={ScreenBottomBarLink.V2} />
