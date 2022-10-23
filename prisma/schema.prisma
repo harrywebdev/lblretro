@@ -37,9 +37,15 @@ model Question {
 
 model Area {
   id            String      @id @default(uuid())
+  parentArea    Area?       @relation(name: "area_hierarchy", fields: [parentId], references: [id])
+  parentId      String?
+  childAreas    Area[]      @relation(name: "area_hierarchy")
   text          String
+  description   String?
   emoji         String
+  isFamily      Boolean     @default(false)
   sequence      Int
+  weight        Int         @default(0)
   questions     Question[]
   createdAt     DateTime    @default(now())
 }

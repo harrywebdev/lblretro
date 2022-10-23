@@ -1,28 +1,150 @@
 import { PrismaClient } from "@prisma/client"
+import { Prisma } from "@prisma/client"
 
 const db = new PrismaClient()
 
 async function seed() {
-  await Promise.all(
-    getAreas().map(async (area) => {
-      if (await db.area.findFirst({ where: { text: area.text } })) {
-        return null
-      }
-      return db.area.create({ data: area })
-    })
-  )
+  // seed areas
+  const areaLove = await createOrUpdateArea({
+    data: {
+      text: "Love",
+      description: "Parents-only time.",
+      emoji: "❤️",
+      sequence: 100,
+      weight: 8,
+      isFamily: true,
+    },
+  })
 
-  await Promise.all(
-    (
-      await getQuestions()
-    ).map(async (question) => {
-      if (await db.question.findFirst({ where: { text: question.text } })) {
-        return null
-      }
+  const areaPartialFamily = await createOrUpdateArea({
+    data: {
+      text: "Partial Family",
+      description: "Single parent with a child kind of activity.",
+      emoji: "👨‍👦",
+      sequence: 200,
+      weight: 0,
+      isFamily: true,
+    },
+  })
 
-      return db.question.create({ data: question })
+  const areaMeTime = await createOrUpdateArea({
+    data: {
+      text: "Me-time",
+      description: "Time alone or with friends.",
+      emoji: "🎩",
+      sequence: 300,
+      weight: 4,
+      parentId: areaPartialFamily.id,
+      isFamily: true,
+    },
+  })
+
+  const areaJonas = await createOrUpdateArea({
+    data: {
+      text: "Jonas",
+      description: "Time with Jonas.",
+      emoji: "👶🏻",
+      sequence: 400,
+      weight: 4,
+      parentId: areaPartialFamily.id,
+      isFamily: true,
+    },
+  })
+
+  const areaFamily = await createOrUpdateArea({
+    data: {
+      text: "Family",
+      description: "Whole family together.",
+      emoji: "👨‍👩‍👧",
+      sequence: 500,
+      weight: 4,
+      isFamily: true,
+    },
+  })
+
+  const areaWork = await createOrUpdateArea({
+    data: {
+      text: "Work",
+      description: "Only significant work related things.",
+      emoji: "🤖",
+      sequence: 600,
+      weight: 1,
+      isFamily: false,
+    },
+  })
+
+  const areaHealth = await createOrUpdateArea({
+    data: {
+      text: "Health",
+      description: "Health in mind, body and spirit.",
+      emoji: "☯️",
+      sequence: 700,
+      weight: 2,
+      isFamily: false,
+    },
+  })
+
+  const areaHealthMind = await createOrUpdateArea({
+    data: {
+      text: "Mind",
+      description: "Healthy mind.",
+      emoji: "🧠",
+      sequence: 800,
+      weight: 0,
+      isFamily: false,
+    },
+  })
+
+  const areaHealth = await createOrUpdateArea({
+    data: {
+      text: "Mind",
+      description: "Healthy mind.",
+      emoji: "🧠",
+      sequence: 800,
+      weight: 0,
+      isFamily: false,
+    },
+  })
+
+  // await Promise.all(
+  //   getAreas().map(async (area) => {
+  //     if (await db.area.findFirst({ where: { text: area.text } })) {
+  //       return null
+  //     }
+  //     return db.area.create({ data: area })
+  //   })
+  // )
+  //
+  // await Promise.all(
+  //   (
+  //     await getQuestions()
+  //   ).map(async (question) => {
+  //     if (await db.question.findFirst({ where: { text: question.text } })) {
+  //       return null
+  //     }
+  //
+  //     return db.question.create({ data: question })
+  //   })
+  // )
+}
+
+async function createOrUpdateArea(areaData: Prisma.AreaCreateArgs) {
+  let area = await db.area.findFirst({
+    where: { emoji: areaData.data.emoji },
+  })
+
+  if (area) {
+    area = await db.area.update({
+      where: { id: area.id },
+      data: {
+        ...areaData.data,
+      },
     })
-  )
+  } else {
+    area = await db.area.create({ data: areaData.data })
+  }
+
+  return area
 }
 
 void seed()
