@@ -1,4 +1,4 @@
-import { Links, LiveReload, Outlet } from "@remix-run/react"
+import { Links, LiveReload, Outlet, Scripts } from "@remix-run/react"
 import styles from "./styles/app.css"
 import ScreenContainer from "~/components/Screen/ScreenContainer"
 
@@ -19,6 +19,7 @@ export default function App() {
         <ScreenContainer>
           <Outlet />
         </ScreenContainer>
+        <Scripts />
         <LiveReload />
       </body>
     </html>
