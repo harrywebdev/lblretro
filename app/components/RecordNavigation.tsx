@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { Link } from "@remix-run/react"
-import ArrowLeftCircle from "~/components/Icon/ArrowLeftCircle"
-import ArrowRightCircle from "~/components/Icon/ArrowRightCircle"
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/solid"
+import { ArrowRightCircleIcon } from "@heroicons/react/24/solid"
 
 type LinkProps = {
   to: string
@@ -30,11 +30,11 @@ const RecordNavigation: FC<RecordNavigationProps> = ({
           aria-label={leftLink.title}
           className={`text-secondary-500 ${linkClassName}`}
         >
-          <ArrowLeftCircle />
+          <ArrowLeftCircleIcon className="w-4 h-4" />
         </Link>
       ) : (
         <span className={`text-gray-300 ${linkClassName}`}>
-          <ArrowLeftCircle />
+          <ArrowLeftCircleIcon className="w-4 h-4" />
         </span>
       )}
 
@@ -53,11 +53,11 @@ const RecordNavigation: FC<RecordNavigationProps> = ({
           aria-label={rightLink.title}
           className={`text-secondary-500 ${linkClassName}`}
         >
-          <ArrowRightCircle />
+          <ArrowRightCircleIcon className="w-4 h-4" />
         </Link>
       ) : (
         <span className={`text-gray-300 ${linkClassName}`}>
-          <ArrowRightCircle />
+          <ArrowRightCircleIcon className="w-4 h-4" />
         </span>
       )}
     </div>

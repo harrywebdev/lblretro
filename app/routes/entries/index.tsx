@@ -13,7 +13,7 @@ import EntryListItem from "~/components/EntryListItem"
 import ScreenBottomBar, {
   ScreenBottomBarLink,
 } from "~/components/Screen/ScreenBottomBar"
-import ChevronLeftIcon from "~/components/Icon/ChevronLeftIcon"
+import { ChevronLeftIcon } from "@heroicons/react/24/solid"
 
 type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
   include: { question: true }
@@ -100,7 +100,7 @@ export default function EntriesIndexRoute() {
             <ScreenHeaderNavLink
               to={backToUrl}
               label={backToLabel}
-              icon={<ChevronLeftIcon />}
+              icon={<ChevronLeftIcon className="w-4 h-4" />}
             />
           ) : undefined
         }

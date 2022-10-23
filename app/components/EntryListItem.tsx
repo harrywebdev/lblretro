@@ -7,7 +7,7 @@ import type { Prisma } from "@prisma/client"
 import ListItemDescription from "~/components/ListItem/ListItemDescription"
 import ListItemLeftSide from "~/components/ListItem/ListItemLeftSide"
 import ListItemRightSide from "~/components/ListItem/ListItemRightSide"
-import MinusCircleIcon from "~/components/Icon/MinusCircleIcon"
+import { MinusCircleIcon } from "@heroicons/react/24/solid"
 
 type DailyLogWithQuestion = Prisma.DailyLogGetPayload<{
   include: { question: true }
@@ -48,7 +48,7 @@ const EntryListItem: FC<EntryListItemProps> = ({ dailyLog, isEditing }) => {
               value="yes"
               className="text-danger-600"
             >
-              <MinusCircleIcon />
+              <MinusCircleIcon className="w-4 h-4" />
             </button>
           </form>
         </ListItemRightSide>
